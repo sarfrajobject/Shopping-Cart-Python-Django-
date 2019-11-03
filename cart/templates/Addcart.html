@@ -1,0 +1,47 @@
+{#<!DOCTYPE html>#}
+{#<html>#}
+{#<head>#}
+{#    <meta charset='utf-8'>#}
+{#    <meta http-equiv='X-UA_Compatible' content='IE=edge'>#}
+{#        <title>Page Title</title>#}
+{#    <meta name='viewport' content='width=device-width,initial-scale=1'>#}
+{#    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>#}
+{#    <script src='main.js'></script>#}
+{#</head>#}
+{#<body>#}
+{#    <form action='login' method='post'>#}
+{#        {% csrf_token %}#}
+{#        <script>#}
+{#            <script>#}
+{#	const user = document.getElementById('user')#}
+{#	user.addEventListener('click',e => document.cookie ="user")#}
+{#</script>#}
+{#        </script>#}
+{##}
+{#        <input type="text" name="username" placeholder="username"><br>#}
+{#        <input type="text" name="password" placeholder="password"><br>#}
+{#        <input type="submit">#}
+{#    </form>#}
+{#    <div>#}
+{#        {% for message in messages %}#}
+{#        <h3> {{message}} </h3>#}
+{#        {% endfor %}#}
+{#    </div>#}
+{#</body>#}
+{#</html>#}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+    <title>Django CRUD application!</title>
+  </head>
+  <body>
+    <div class="container">
+      <form method="post">{% csrf_token %}
+        Are you sure you want to delete "{{ object }}" ?
+        <input class="btn btn-primary" type="submit" value="Submit" />
+      </form>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,276 @@
+<!-- {#                <input type="submit" value="Continue to checkout" class="btn">#}
+{#            </form>#}
+{#        </div>#}
+{#    </div>#}
+{#    <div class="col-25">#}
+{#        <div class="container">#}
+{#            <h4>Cart <span class="price" style="color:black">Qty<i class="fa fa-shopping-cart"></i> <b></b></span></h4>#}
+{#            <div class="row">#}
+{##}
+{#        {% for product in cart %}#}
+{#            <div class="col-25">#}
+{#                    <div class="card-body">#}
+{#                        <p><a href="#">{{ product.name }}</a> <span class="Qty">{{ product.Qty }}</span><span class="price">{{ product.price }}</span></p>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        {% endfor %}#}
+{#    </div>#}
+{#    {% for product in cart %}#}
+{#            <p>Total <span class="price" style="color:black"><b>{{ product.price }}</b></span></p>#}
+{#    {% endfor %}#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+{#</body>#}
+{#</html>#}
+{##}
+{#{% extends 'static/list.html' %}#}
+{#{% load static %}#}
+{#{% block title %}#}
+{#    Your Shopping Cart#}
+{#{% endblock %}#}
+{##}
+{##}
+{#{% block content %}#}
+{#    <div class="container">#}
+{#        <div class="row" style="margin-top: 6%">#}
+{#        <h2>Your Shopping Cart#}
+{#            <span class="badge pull-right">#}
+{#                {% with totail_items=cart|length %}#}
+{#                    {% if cart|length > 0 %}#}
+{#                        My Shopping Order:#}
+{#                        <a href="{% url "cart:cart_detail" %}" style="color: #ffffff">#}
+{#                            {{ totail_items }} item {{ totail_items|pluralize }}, {{cart.price}}. {{ cart.get_total_price }}#}
+{#                        </a>#}
+{#                        {% else %}#}
+{#                        Your cart is empty.#}
+{#                    {% endif %}#}
+{#                {% endwith %}#}
+{#            </span>#}
+{#        </h2>#}
+{#            <table class="table table-striped table-hover">#}
+{#                <thead style="background-color: #5AC8FA">#}
+{#                    <tr>#}
+{#                        <th>Image</th>#}
+{#                        <th>Product</th>#}
+{#                        <th>Quantity</th>#}
+{#                        <th>Remove</th>#}
+{#                        <th>Unit Price</th>#}
+{#                        <th>Price</th>#}
+{#                    </tr>#}
+{#                </thead>#}
+{#                <tbody>#}
+{#                {% for item in cart %}#}
+{#                    {% with product=item.product  %}#}
+{#                        <tr>#}
+{#                            <td>#}
+{#                                <a href="{{ cart.get__absolute_url }}">#}
+{#                                    <img src="{% if item.image %} {{ item.image.url }} {% else %} {% static 'img/default.jpg' %} {% endif %}" alt="..." style="height: 130px; width: auto">#}
+{#                                </a>#}
+{#                            </td>#}
+{#                            <td>{{ item.name }}</td>#}
+{#                            <td>#}
+{#                                <form action="{% static 'cart' product.id %}" method="post">#}
+{#                                    {% csrf_token %}#}
+{#                                    {{ item.update_quantity_form.quantity }}#}
+{#                                    {{ item.update_quantity_form.update }}#}
+{#                                    <input type="submit" value="Update" class="btn btn-info">#}
+{#                                </form>#}
+{#                            </td>#}
+{#                            <td>#}
+{#                                <a href="{% static "cart:cart_remove" product.id %}">Remove</a>#}
+{#                            </td>#}
+{#                            <td>{{cart.price}}  {{ item.price }}</td>#}
+{#                            <td>{{cart.price}}  {{ item.total_price }}</td>#}
+{#                        </tr>#}
+{#                    {% endwith %}#}
+{#                {% endfor %}#}
+{#                <tr style="background-color: #5AC8FA">#}
+{#                    <td><b>Total</b></td>#}
+{#                    <td colspan="4"></td>#}
+{#                    <td colspan="num"><b> {{cart.price}} {{ cart.get_total_price }}</b></td>#}
+{#                </tr>#}
+{#                </tbody>#}
+{#            </table>#}
+{#        <p class="text-right">#}
+{#            <a href="{% static "shop:product_list" %}" class="btn btn-default">Continue Shopping</a>#}
+{#            <a href="" class="btn btn-primary">Checkout</a>#}
+{##}
+{#        </p>#}
+{#        </div>#}
+{#    </div>#}
+{#{% endblock %}#}
+{##}
+{#<li class="nav-item">#}
+{#    <a cla
+
+ss="nav-link" href="#">Cart(<span id="cart">0</span></a>#}
+{#</li>#}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: Arial;
+            font-size: 17px;
+            padding: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .row {
+            display: -ms-flexbox; /* IE10 */
+            display: flex;
+            -ms-flex-wrap: wrap; /* IE10 */
+            flex-wrap: wrap;
+            margin: 0 -16px;
+        }
+
+        .col-25 {
+            -ms-flex: 25%; /* IE10 */
+            flex: 25%;
+        }
+
+        .col-50 {
+            -ms-flex: 50%; /* IE10 */
+            flex: 50%;
+        }
+
+        .col-75 {
+            -ms-flex: 75%; /* IE10 */
+            flex: 75%;
+        }
+
+        .col-25,
+        .col-50,
+        .col-75 {
+            padding: 0 16px;
+        }
+
+        .container {
+            background-color: #f2f2f2;
+            padding: 5px 20px 15px 20px;
+            border: 1px solid lightgrey;
+            border-radius: 3px;
+        }
+
+        input[type=text] {
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        label {
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .icon-container {
+            margin-bottom: 20px;
+            padding: 7px 0;
+            font-size: 24px;
+        }
+
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            width: 100%;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 17px;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            color: #2196F3;
+        }
+
+        hr {
+            border: 1px solid lightgrey;
+        }
+
+        span.price {
+            float: right;
+            color: grey;
+        }
+
+        /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
+        @media (max-width: 800px) {
+            .row {
+                flex-direction: column-reverse;
+            }
+
+            .col-25 {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+                <label>
+                <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
+                </label>
+                <input type="submit" value="Continue to checkout" class="btn">
+            </form>
+        </div>
+    </div>
+    <div class="col-25">
+        <div class="container">
+            <h4>Cart <span class="price" style="color:black">Qty<i class="fa fa-shopping-cart"></i> <b></b></span></h4>
+            <div class="row">
+                 {% for item in cart %}
+    item.Qty
+    {% endfor %}  
+            </div>
+
+        </div>
+     </div>
+
+    {% for item in cart %}
+    item.Qty
+    {% endfor %}
+
+{#    {% for product in cart %}#}
+{#            <p>Total <span class="price" style="color:black"><b>{{ product.price }}</b></span></p>#}
+{#    {% endfor %}#}
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
+ -->
+ <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+    <title>Django CRUD application!</title>
+  </head>
+  <body>
+    <div class="container">
+        <h1>Blog Post List!</h1>
+        <ul>
+          {% for post in cart %}
+            
+          <p>Title: {{ post.Qty }}  {{ post.Qty }} </p>
+          </li>
+          {% endfor %}
+        </ul>
+    </div>
+  </body>
+</html>
